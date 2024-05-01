@@ -10,6 +10,8 @@ namespace EndorsementRejection.Data
         }
 
         public DbSet<EndoRejection> EndoRejections { get; set; }
+        public DbSet<EndoUser> EndoUsers { get; set; }
+        public DbSet<ApprovalUser> ApprovalUsers { get; set; }
     }   
     
     

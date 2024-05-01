@@ -14,8 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\Abstract\" />
-    <Folder Include="Infrastructure\Repository\" />
     <Folder Include="Models\ViewModels\" />
   </ItemGroup>
 

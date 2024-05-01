@@ -4,6 +4,7 @@ using EndorsementRejection.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EndorsementRejection.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240430192348_UserTypesAdded")]
+    partial class UserTypesAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,18 +59,22 @@ namespace EndorsementRejection.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ApprovalComments")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ApprovalStatus")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ApprovedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ApprovedDate")
+                    b.Property<DateTime>("ApprovedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PolicyHolder")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PolicyNumber")
@@ -75,25 +82,25 @@ namespace EndorsementRejection.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProcessedType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RejectionLetterComments")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RejectionReason")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RequestedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("RequestedDate")
+                    b.Property<DateTime>("RequestedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("completedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("completedDate")
+                    b.Property<DateTime>("completedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
