@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EndorsementRejection.Data;
 using EndorsementRejection.Models.Entities;
+using EndorsementRejection.Infrastructure.Abstract;
+using EndorsementRejection.Infrastructure.Repository;
 
 namespace EndorsementRejection.Controllers
 {
@@ -46,7 +48,13 @@ namespace EndorsementRejection.Controllers
         // GET: EndoRejections/Create
         public IActionResult Create()
         {
-            return View();
+            EndoRejection endorejectionViewModel = new EndoRejection();
+            IUserRepository EndoUserRepo = new UserRepository(_context);
+            List<EndoUser> EndoUserList = EndoUserRepo.EndoUserList();
+            List<ApprovalUser> ApprovalUserList = EndoUserRepo.ApprovalUserList();
+            ViewBag.EndoUserList = EndoUserList;
+            ViewBag.ApprovalUserList = ApprovalUserList;
+            return View(endorejectionViewModel);
         }
 
         // POST: EndoRejections/Create
@@ -65,6 +73,29 @@ namespace EndorsementRejection.Controllers
             return View(endoRejection);
         }
 
+
+        // GET: EndoRejections/Approval/5
+        public async Task<IActionResult> Approval(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var endoRejection = await _context.EndoRejections.FindAsync(id);
+            
+            if (endoRejection == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                endoRejection.ApprovedDate = DateTime.Now;
+            }
+            return View(endoRejection);
+        }
+
+
         // GET: EndoRejections/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -78,8 +109,17 @@ namespace EndorsementRejection.Controllers
             {
                 return NotFound();
             }
+
+            IUserRepository EndoUserRepo = new UserRepository(_context);
+            List<EndoUser> EndoUserList = EndoUserRepo.EndoUserList();
+            List<ApprovalUser> ApprovalUserList = EndoUserRepo.ApprovalUserList();
+            ViewBag.EndoUserList = EndoUserList;
+            ViewBag.ApprovalUserList = ApprovalUserList;
+
             return View(endoRejection);
         }
+
+
 
         // POST: EndoRejections/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
