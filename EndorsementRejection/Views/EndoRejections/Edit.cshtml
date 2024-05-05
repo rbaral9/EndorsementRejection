@@ -4,16 +4,16 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+@* <h1>Edit</h1> *@
 
-<h4>EndoRejection</h4>
-<hr />
+<h4 class="text-center">Edit Rejection Request</h4>
 
 
-<div class="row">
-    <div class="col-md-4">
+
+<div class="container">
+    <div class="container">
         <form asp-action="Edit">
-            <div class="card" style="width: 36rem;">
+            <div class="card mx-auto" style="width: 36rem;">
                 @* <div class="d-flex aligns-items-center justify-content-center card text-center w-75 mx-auto"> *@
                 <div class="card-body">
                     <h5 class="card-title">Rejection Request:</h5>
@@ -73,7 +73,7 @@
                 </div>
             </div>
             <br />
-            <div class="card" style="width: 36rem;">
+            <div class="card mx-auto" style="width: 36rem;">
                 <div class="card-body">
                     <h5 class="card-title">Approval Status:</h5>
 
@@ -102,8 +102,8 @@
                                 class="form-select"
                                 asp-items="@(new SelectList(ViewBag.ApprovalUserList,"UserName", "UserName"))">
                         </select>
-                        @* <input asp-for="ApprovedBy" class="form-control" />
-                        <span asp-validation-for="ApprovedBy" class="text-danger"></span> *@
+                        @* <input asp-for="ApprovedBy" class="form-control" />*@
+                        <span asp-validation-for="ApprovedBy" class="text-danger"></span> 
                     </div>
 
                     <div class="form-group">
@@ -124,18 +124,24 @@
             </div>
 
             <br />
-            <div class="card" style="width: 36rem;">
+            <div class="card mx-auto" style="width: 36rem;">
                 <div class="card-body">
                     <h5 class="card-title">Rejection Letter Processed:</h5>
 
                     <div class="form-group">
                         <label asp-for="completedBy" class="control-label">completed By:</label>
-                        <input asp-for="completedBy" class="form-control" />
+                        <select asp-for="completedBy"
+                                class="form-select"
+                                asp-items="@(new SelectList(ViewBag.EndoUserList,"UserName", "UserName"))">
+                        </select>
+                        @* <input asp-for="completedBy" class="form-control" /> *@
                         <span asp-validation-for="completedBy" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="completedDate" class="control-label">completed Date:</label>
-                        <input asp-for="completedDate" class="form-control" />
+                        @Html.TextBoxFor(Model => Model.completedDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+
+                        @* <input asp-for="completedDate" class="form-control" /> *@
                         <span asp-validation-for="completedDate" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -148,6 +154,9 @@
                     <br />
                     <div class="form-group">
                         <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                    <div>
+                        <a asp-action="Index">Back to List</a>
                     </div>
                 </div>
             </div>
@@ -228,9 +237,9 @@
     </div>
 </div> *@
 
-<div>
+@* <div>
     <a asp-action="Index">Back to List</a>
-</div>
+</div> *@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -7,7 +7,10 @@ namespace EndorsementRejection.Models.Entities
         [Key]
         [Required]
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Requested By is Mandatory")]
         public string RequestedBy { get; set; }
+
         public string PolicyNumber { get; set; }
         public string? PolicyHolder { get; set; }
         public string? ProcessedType { get; set; }

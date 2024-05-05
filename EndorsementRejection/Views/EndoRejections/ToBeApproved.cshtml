@@ -1,0 +1,138 @@
+﻿@model IEnumerable<EndorsementRejection.Models.Entities.EndoRejection>
+
+@{
+    ViewData["Title"] = "ToBeApproved";
+}
+
+<h1>ToBeApproved</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table table-sm table-responsive table-striped table-bordered table-hover zero-configuration" id="tbllist">
+
+    <thead class="table-dark">
+        <tr>
+            <th class="text-center  text-wrap">
+                @Html.Label("Requested By")
+            </th>
+            <th>
+                @Html.Label("Policy#")
+            </th>
+            <th>
+                @Html.Label("Policy Holder")
+
+            </th>
+            <th>
+                @Html.Label("Req Date")
+
+                @* @Html.DisplayNameFor(model => model.RequestedDate) *@
+            </th>
+            <th>
+                @Html.Label("Processed Type")
+
+                @* @Html.DisplayNameFor(model => model.ProcessedType) *@
+            </th>
+            <th>
+                @Html.Label("Approval Status")
+
+                @* @Html.DisplayNameFor(model => model.ApprovalStatus) *@
+            </th>
+            <th>
+                @Html.Label("Approved By")
+
+                @* @Html.DisplayNameFor(model => model.ApprovedBy) *@
+            </th>
+
+            <th>
+                @Html.Label("Approved Date")
+
+                @* @Html.DisplayNameFor(model => model.ApprovedDate) *@
+            </th>
+            @* <th>
+            @Html.Label("Approval Comments")
+
+            @* @Html.DisplayNameFor(model => model.ApprovalComments)
+            </th> *@
+            <th>
+                @Html.Label("completed By")
+
+                @* @Html.DisplayNameFor(model => model.completedBy) *@
+            </th>
+            <th>
+                @Html.Label("completed Date")
+
+                @* @Html.DisplayNameFor(model => model.completedDate) *@
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PolicyNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PolicyHolder)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProcessedType)
+                </td>
+                @*                     <td>
+            @Html.DisplayFor(modelItem => item.RejectionReason)
+            </td> *@
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApprovalStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApprovedBy)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApprovedDate)
+                </td>
+                @*                     <td>
+            @Html.DisplayFor(modelItem => item.ApprovalComments)
+            </td> *@
+                <td>
+                    @Html.DisplayFor(modelItem => item.completedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.completedDate)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> @* |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<style type="text/css">
+    #tbllist_filter {
+        margin-bottom: 1%;
+    }
+</style>
+<script type="text/javascript">
+    var js = jQuery.noConflict(true);
+    js(document).ready(function () {
+        js('#tbllist').DataTable({
+            order: [[0, 'asc']]
+        });
+        // LoadListing();
+    });
+</script>
