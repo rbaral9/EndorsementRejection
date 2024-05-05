@@ -1,16 +1,173 @@
 ﻿@model EndorsementRejection.Models.Entities.EndoRejection
 
 @{
-    ViewData["Title"] = "Approval";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Approval</h1>
+@* <h1>Edit</h1> *@
 
-<h4>EndoRejection</h4>
-<hr />
-<div class="row">
+<h4 class="text-center">Approve Rejection Request</h4>
+
+
+
+<div class="container">
+    <div class="container">
+        <form asp-action="Edit">
+            <div class="card mx-auto" style="width: 36rem;">
+                @* <div class="d-flex aligns-items-center justify-content-center card text-center w-75 mx-auto"> *@
+                <div class="card-body">
+                    <h5 class="card-title">Rejection Request:</h5>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="RequestedBy" class="control-label"></label>
+                        <select asp-for="RequestedBy"
+                                class="form-select"
+                                asp-items="@(new SelectList(ViewBag.EndoUserList,"UserName", "UserName"))">
+                        </select>
+                        @* <input asp-for="RequestedBy" class="form-control" />
+                        <span asp-validation-for="RequestedBy" class="text-danger"></span> *@
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PolicyNumber" class="control-label">Policy Number:</label>
+                        <input asp-for="PolicyNumber" class="form-control" />
+                        <span asp-validation-for="PolicyNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PolicyHolder" class="control-label">Policy Holder:</label>
+                        <input asp-for="PolicyHolder" class="form-control" />
+                        <span asp-validation-for="PolicyHolder" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RequestedDate" class="control-label">Requested Date:</label>
+                        @Html.TextBoxFor(Model => Model.RequestedDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+                        @* <input asp-for="RequestedDate" class="form-control" /> *@
+                        <span asp-validation-for="RequestedDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        @* <label asp-for="ProcessedType" class="control-label"></label> *@
+                        <div class="form-group">
+                            <label asp-for="ProcessedType" class="control-label">Type Processed:</label>
+                            @* <input asp-for="ApprovalStatus" class="form-control" /> *@
+                            <div class="form-group">
+                                <label>
+                                    <input asp-for="ProcessedType" type="radio" value="Partial">
+                                    <label for="Partial">Partial Rejection</label>
+                                </label>
+                                <label>
+                                    <input asp-for="ProcessedType" type="radio" value="Full">
+                                    <label for="Full">Full Rejection</label>
+                                </label>
+
+                            </div>
+                            <span asp-validation-for="ApprovalStatus" class="text-danger"></span>
+                        </div>
+                        @* <input asp-for="ProcessedType" class="form-control" /> *@
+                        <span asp-validation-for="ProcessedType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RejectionReason" class="control-label">Rejection Reason:</label>
+                        <textarea asp-for="RejectionReason" class="form-control"></textarea>
+                        @* <input asp-for="RejectionReason" class="form-control" /> *@
+                        <span asp-validation-for="RejectionReason" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="card mx-auto" style="width: 36rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Approval Status:</h5>
+
+
+
+                    <div class="form-group">
+                        <label asp-for="ApprovalStatus" class="control-label">Status:</label>
+                        @* <input asp-for="ApprovalStatus" class="form-control" /> *@
+                        <div class="form-group">
+                            <label>
+                                <input asp-for="ApprovalStatus" type="radio" value="Approved">
+                                <label for="Approved">Approved</label>
+                            </label>
+                            <label>
+                                <input asp-for="ApprovalStatus" type="radio" value="Declined">
+                                <label for="Declined">Declined</label>
+                            </label>
+
+                        </div>
+                        <span asp-validation-for="ApprovalStatus" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="ApprovedBy" class="control-label">Approved By:</label>
+                        <select asp-for="ApprovedBy"
+                                class="form-select"
+                                asp-items="@(new SelectList(ViewBag.ApprovalUserList,"UserName", "UserName"))">
+                        </select>
+                        @* <input asp-for="ApprovedBy" class="form-control" />
+                        <span asp-validation-for="ApprovedBy" class="text-danger"></span> *@
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="ApprovedDate" class="control-label">Approved Date:</label>
+                        @Html.TextBoxFor(Model => Model.ApprovedDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+                        @* <input asp-for="ApprovedDate" class="form-control" /> *@
+                        <span asp-validation-for="ApprovedDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ApprovalComments" class="control-label">Approval Comments:</label>
+                        <textarea asp-for="ApprovalComments" class="form-control"></textarea>
+
+                        @* <input asp-for="ApprovalComments" class="form-control" /> *@
+                        <span asp-validation-for="ApprovalComments" class="text-danger"></span>
+                    </div>
+
+                </div>
+            </div>
+
+            <br />
+            <div class="card mx-auto" style="width: 36rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Rejection Letter Processed:</h5>
+
+                    <div class="form-group">
+                        <label asp-for="completedBy" class="control-label">completed By:</label>
+                        <select asp-for="completedBy"
+                                class="form-select"
+                                asp-items="@(new SelectList(ViewBag.EndoUserList,"UserName", "UserName"))">
+                        </select>
+                        @* <input asp-for="completedBy" class="form-control" /> *@
+                        <span asp-validation-for="completedBy" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="completedDate" class="control-label">completed Date:</label>
+                        @Html.TextBoxFor(Model => Model.completedDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+
+                        @* <input asp-for="completedDate" class="form-control" /> *@
+                        <span asp-validation-for="completedDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RejectionLetterComments" class="control-label">Comments:</label>
+                        <textarea asp-for="RejectionLetterComments" class="form-control"></textarea>
+
+                        @* <input asp-for="ApprovalComments" class="form-control" /> *@
+                        <span asp-validation-for="RejectionLetterComments" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                    <div>
+                        <a asp-action="Index">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@* <div class="row">
     <div class="col-md-4">
-        <form asp-action="Approval">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -74,21 +231,18 @@
                 <span asp-validation-for="completedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RejectionLetterComments" class="control-label"></label>
-                <input asp-for="RejectionLetterComments" class="form-control" />
-                <span asp-validation-for="RejectionLetterComments" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
+</div> *@
 
-<div>
+@* <div>
     <a asp-action="Index">Back to List</a>
-</div>
+</div> *@
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

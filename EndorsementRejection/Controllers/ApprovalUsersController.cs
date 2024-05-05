@@ -56,6 +56,7 @@ namespace EndorsementRejection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,UserName,Password,Role")] ApprovalUser approvalUser)
         {
+
             if (ModelState.IsValid)
             {
                 _context.Add(approvalUser);

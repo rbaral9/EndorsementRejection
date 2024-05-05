@@ -23,34 +23,49 @@
                     @Html.Label("Policy#")
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.PolicyHolder)
+                    @Html.Label("Policy Holder")
+                   
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ProcessedType)
+                    @Html.Label("Req Date")
+
+                    @* @Html.DisplayNameFor(model => model.RequestedDate) *@
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.RejectionReason)
+                    @Html.Label("Processed Type")
+
+                    @* @Html.DisplayNameFor(model => model.ProcessedType) *@
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ApprovalStatus)
+                    @Html.Label("Approval Status")
+
+                    @* @Html.DisplayNameFor(model => model.ApprovalStatus) *@
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ApprovedBy)
+                    @Html.Label("Approved By")
+
+                    @* @Html.DisplayNameFor(model => model.ApprovedBy) *@
+                </th>
+                
+                <th>
+                    @Html.Label("Approved Date")
+
+                    @* @Html.DisplayNameFor(model => model.ApprovedDate) *@
+                </th>
+                @* <th>
+                    @Html.Label("Approval Comments")
+
+                    @* @Html.DisplayNameFor(model => model.ApprovalComments) 
+                </th> *@
+                <th>
+                    @Html.Label("completed By")
+
+                    @* @Html.DisplayNameFor(model => model.completedBy) *@
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.RequestedDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ApprovedDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ApprovalComments)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.completedBy)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.completedDate)
+                    @Html.Label("completed Date")
+
+                    @* @Html.DisplayNameFor(model => model.completedDate) *@
                 </th>
                 <th></th>
             </tr>
@@ -69,26 +84,27 @@
                         @Html.DisplayFor(modelItem => item.PolicyHolder)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ProcessedType)
+                        @Html.DisplayFor(modelItem => item.RequestedDate)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.RejectionReason)
+                        @Html.DisplayFor(modelItem => item.ProcessedType)
                     </td>
+@*                     <td>
+                        @Html.DisplayFor(modelItem => item.RejectionReason)
+                    </td> *@
                     <td>
                         @Html.DisplayFor(modelItem => item.ApprovalStatus)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ApprovedBy)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RequestedDate)
-                    </td>
+
                     <td>
                         @Html.DisplayFor(modelItem => item.ApprovedDate)
                     </td>
-                    <td>
+@*                     <td>
                         @Html.DisplayFor(modelItem => item.ApprovalComments)
-                    </td>
+                    </td> *@
                     <td>
                         @Html.DisplayFor(modelItem => item.completedBy)
                     </td>
@@ -96,9 +112,9 @@
                         @Html.DisplayFor(modelItem => item.completedDate)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> @* |
                         <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
                     </td>
                 </tr>
             }
