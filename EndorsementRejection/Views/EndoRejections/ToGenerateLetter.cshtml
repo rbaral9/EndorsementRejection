@@ -15,7 +15,7 @@
         <div> @TempData["Message"]</div>
         <div>
 
-            <b> Requested By: </b>
+            @* <b> Requested By: </b> *@
             <select id="User" value="User" name="User" asp-items="@(new SelectList(ViewBag.EndoUserList,"UserName", "UserName"))" class="form-select-sm">
                 <option value="" selected disabled>---Select Requested By---</option>
             </select>
@@ -41,35 +41,42 @@
             <th class="text-center  text-wrap">
                 @Html.Label("Requested By")
             </th>
-            <th>
-                @Html.Label("Policy#")
+            <th class="text-center  text-wrap">
+
+                @Html.Label("Policy No")
             </th>
-            <th>
+            <th class="text-center  text-wrap">
+
                 @Html.Label("Policy Holder")
 
             </th>
-            <th>
+            <th class="text-center  text-wrap">
+
                 @Html.Label("Req Date")
 
                 @* @Html.DisplayNameFor(model => model.RequestedDate) *@
             </th>
-            <th>
+            <th class="text-center  text-wrap">
+
                 @Html.Label("Processed Type")
 
                 @* @Html.DisplayNameFor(model => model.ProcessedType) *@
             </th>
-            <th>
+            <th class="text-center  text-wrap">
+
                 @Html.Label("Approval Status")
 
                 @* @Html.DisplayNameFor(model => model.ApprovalStatus) *@
             </th>
-            <th>
+            <th class="text-center  text-wrap">
+
                 @Html.Label("Approved By")
 
                 @* @Html.DisplayNameFor(model => model.ApprovedBy) *@
             </th>
 
-            <th>
+            <th class="text-center  text-wrap">
+
                 @Html.Label("Approved Date")
 
                 @* @Html.DisplayNameFor(model => model.ApprovedDate) *@
@@ -79,13 +86,15 @@
 
             @* @Html.DisplayNameFor(model => model.ApprovalComments)
             </th> *@
-            <th>
-                @Html.Label("completed By")
+            <th class="text-center  text-wrap">
+
+                @Html.Label("Completed By")
 
                 @* @Html.DisplayNameFor(model => model.completedBy) *@
             </th>
-            <th>
-                @Html.Label("completed Date")
+            <th class="text-center  text-wrap">
+
+                @Html.Label("Completed Date")
 
                 @* @Html.DisplayNameFor(model => model.completedDate) *@
             </th>

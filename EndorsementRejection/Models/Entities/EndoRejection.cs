@@ -17,10 +17,16 @@ namespace EndorsementRejection.Models.Entities
         public string? RejectionReason { get; set; }
         public string? ApprovalStatus { get; set; }
         public string? ApprovedBy { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        [DataType(DataType.Date)]
         public DateTime?  RequestedDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        [DataType(DataType.Date)]
         public DateTime? ApprovedDate { get; set; }
         public string? ApprovalComments { get; set; }
-        public string? completedBy { get; set; } 
+        public string? completedBy { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        [DataType(DataType.Date)]
         public DateTime? completedDate { get; set; }
         public string? RejectionLetterComments { get; set; }
 
