@@ -4,10 +4,35 @@
     ViewData["Title"] = "ToGenerateLetter";
 }
 
-<h1>ToGenerateLetter</h1>
+@* <h1>ToGenerateLetter</h1> *@
+<h4 class="text-center">Generate Letter List</h4>
 
+@* <h5>Search By PolicyNo</h5> *@
 <p>
-    <a asp-action="Create">Create New</a>
+    @using (Html.BeginForm("ToGenerateLetter", "EndoRejections", FormMethod.Post))
+    {
+        @*@Html.ActionLink("Create New Vendor", "Create")*@
+        <div> @TempData["Message"]</div>
+        <div>
+
+            <b> Requested By: </b>
+            <select id="User" value="User" name="User" asp-items="@(new SelectList(ViewBag.EndoUserList,"UserName", "UserName"))" class="form-select-sm">
+                <option value="" selected disabled>---Select Requested By---</option>
+            </select>
+            @* @Html.DropDownList(new SelectList(ViewBag.EndoUserList, "UserName", "UserName")er)
+            <select asp-for="RequestedBy"
+                    class="form-select"
+                    asp-items="@(new SelectList(ViewBag.EndoUserList,"UserName", "UserName"))">
+            </select>
+ *@
+            <input type="submit" id="Search" value="Search" name="Search" />
+            <input type="submit" id="btnClear" value="Clear" name="Clear" />
+
+        </div>
+    }
+</p>
+<p>
+    @* <a asp-action="Create">Create New</a> *@
 </p>
 <table class="table table-sm table-responsive table-striped table-bordered table-hover zero-configuration" id="tbllist">
 

@@ -23,6 +23,8 @@
                         <select asp-for="RequestedBy"
                                 class="form-select"
                                 asp-items="@(new SelectList(ViewBag.EndoUserList,"UserName", "UserName"))">
+                            <option value="" selected disabled>---Select Requested By---</option>
+
                         </select>
                         @* <input asp-for="RequestedBy" class="form-control" />
                         <span asp-validation-for="RequestedBy" class="text-danger"></span> *@
@@ -101,9 +103,11 @@
                         <select asp-for="ApprovedBy"
                                 class="form-select"
                                 asp-items="@(new SelectList(ViewBag.ApprovalUserList,"UserName", "UserName"))">
+                            <option value="" selected disabled>---Select Requested By---</option>
+
                         </select>
                         @* <input asp-for="ApprovedBy" class="form-control" />*@
-                        <span asp-validation-for="ApprovedBy" class="text-danger"></span> 
+                        <span asp-validation-for="ApprovedBy" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
@@ -133,6 +137,8 @@
                         <select asp-for="completedBy"
                                 class="form-select"
                                 asp-items="@(new SelectList(ViewBag.EndoUserList,"UserName", "UserName"))">
+                            <option value="" selected disabled>---Select Completed By---</option>
+
                         </select>
                         @* <input asp-for="completedBy" class="form-control" /> *@
                         <span asp-validation-for="completedBy" class="text-danger"></span>
@@ -242,5 +248,7 @@
 </div> *@
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

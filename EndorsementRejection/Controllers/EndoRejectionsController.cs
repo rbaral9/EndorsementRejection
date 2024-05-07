@@ -30,12 +30,165 @@ namespace EndorsementRejection.Controllers
         // GET: EndoRejectionsToGenerateLetter
         public async Task<IActionResult> ToGenerateLetter()
         {
-            return View(await _context.EndoRejections.Where(Rejection => Rejection.completedBy == null).ToListAsync());
+            IUserRepository EndoUserRepo = new UserRepository(_context);
+            List<EndoUser> EndoUserList = EndoUserRepo.EndoUserList();
+            //List<ApprovalUser> ApprovalUserList = EndoUserRepo.ApprovalUserList();
+            ViewBag.EndoUserList = EndoUserList;
+            //ViewBag.ApprovalUserList = ApprovalUserList;
+            return View(await _context.EndoRejections.Where(Rejection => Rejection.completedBy == null && Rejection.ApprovedBy !=null).ToListAsync());
+        }
+
+
+        // POST: EndoRejectionsToGenerateLetter
+        [HttpPost]
+        public async Task<IActionResult> ToGenerateLetter(string Search, string Clear, string User)
+        {
+            IUserRepository EndoUserRepo = new UserRepository(_context);
+            List<EndoUser> EndoUserList = EndoUserRepo.EndoUserList();
+            //List<ApprovalUser> ApprovalUserList = EndoUserRepo.ApprovalUserList();
+            ViewBag.EndoUserList = EndoUserList;
+            //ViewBag.ApprovalUserList = ApprovalUserList;
+
+            if (!string.IsNullOrEmpty(Clear))
+            {
+                return RedirectToAction("ToGenerateLetter");
+            }
+
+
+            if (!string.IsNullOrEmpty(Search))
+            {
+                try
+                {
+
+
+
+                    if (User != "")
+                    {
+
+                        //ViewBag.TableName = formcollection["PolicyNoSearch"];
+                        ViewBag.User = User;
+                        //HttpCookie RT = new HttpCookie("ResultTableName", formcollection["ResultTableName"]);
+                        //HttpContext.Response.AppendCookie(new HttpCookie("PolicyNo", PolicyNo));
+
+
+                        //List<EndoRejection> ListPolicy = await _context.EndoRejections.Where(EndoRejection => EndoRejection.RequestedBy == User).OrderByDescending(c => c.ApprovedDate).ThenBy(n => n.ApprovalStatus).ToListAsync();
+                        List<EndoRejection> ListPolicy = await _context.EndoRejections.Where(Rejection => Rejection.completedBy == null && Rejection.ApprovedBy != null && Rejection.RequestedBy == User).OrderByDescending(c => c.ApprovedDate).ThenBy(n => n.ApprovalStatus).ToListAsync();
+
+                        if (ListPolicy.Count() == 0)
+                        {
+
+                            TempData["Message"] = "No Records Found";
+                            return View(ListPolicy);
+                            //return RedirectToAction("Index");
+                            //return RedirectToAction("GetPolicy", new { PolicyNoSearch = PolicyNoSearch });
+
+                        }
+                        else
+                        {
+                            //ViewBag.EnableAddRow = true;
+
+                            return View(ListPolicy);
+                        }
+
+                    }
+
+                    //Export(ListVendorName);
+
+
+
+
+
+
+
+
+
+
+                }
+
+                catch (Exception ex)
+                {
+
+                    return RedirectToAction("Index");
+                }
+            }
+            
+            return View(await _context.EndoRejections.Where(Rejection => Rejection.completedBy == null && Rejection.ApprovedBy != null).ToListAsync());
         }
 
         // GET: EndoRejections
         public async Task<IActionResult> Index()
         {
+            return View(await _context.EndoRejections.ToListAsync());
+        }
+
+
+        // POST: EndoRejections
+        [HttpPost]
+        public async Task<IActionResult> Index(string Search, string PolicyNo, string Clear)
+        {
+            if (!string.IsNullOrEmpty(Clear))
+            {
+                return RedirectToAction("Index");
+            }
+
+
+            if (!string.IsNullOrEmpty(Search))
+            {
+                try
+                {
+
+
+
+                    if (PolicyNo != "")
+                    {
+
+                        //ViewBag.TableName = formcollection["PolicyNoSearch"];
+                        ViewBag.PolicyNo = PolicyNo;
+                        //HttpCookie RT = new HttpCookie("ResultTableName", formcollection["ResultTableName"]);
+                        //HttpContext.Response.AppendCookie(new HttpCookie("PolicyNo", PolicyNo));
+
+
+                        List<EndoRejection> ListPolicy = await _context.EndoRejections.Where(EndoRejection => EndoRejection.PolicyNumber == PolicyNo).ToListAsync();
+
+
+                        if (ListPolicy.Count() == 0)
+                        {
+
+                            TempData["Message"] = "No Records Found";
+                            return View(ListPolicy);
+                            //return RedirectToAction("Index");
+                            //return RedirectToAction("GetPolicy", new { PolicyNoSearch = PolicyNoSearch });
+
+                        }
+                        else
+                        { 
+                            //ViewBag.EnableAddRow = true;
+
+                            return View(ListPolicy);
+                        }
+
+                    }
+
+                    //Export(ListVendorName);
+
+
+
+
+
+
+
+
+
+
+                }
+
+                catch (Exception ex)
+                {
+
+                    return RedirectToAction("Index");
+                }
+            }
+
             return View(await _context.EndoRejections.ToListAsync());
         }
 
@@ -169,6 +322,13 @@ namespace EndorsementRejection.Controllers
                 endoRejection.ApprovedBy = null;
 
             }
+
+            if (endoRejection.completedBy == "Select")
+            {
+                endoRejection.completedBy = null;
+
+            }
+
             if (endoRejection.ApprovalStatus != null && endoRejection.ApprovedBy==null)
             {
                 //endoRejection.RequestedBy = null;
