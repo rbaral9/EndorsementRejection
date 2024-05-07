@@ -4,10 +4,28 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+@* <h1>Index</h1> *@
+<h4 class="text-center">Request List</h4>
 
+@* <h5>Search By PolicyNo</h5> *@
 <p>
-    <a asp-action="Create">Create New</a>
+    @using (Html.BeginForm("Index", "EndoRejections", FormMethod.Post))
+    {
+        @*@Html.ActionLink("Create New Vendor", "Create")*@
+        <div> @TempData["Message"]</div>
+        <div>
+
+            <b> PolicyNo: </b>
+            @Html.TextBox("PolicyNo", (object)ViewBag.PolicyNo)
+
+            <input type="submit" id="Search" value="Search" name="Search" />
+            <input type="submit" id="btnClear" value="Clear" name="Clear" />
+
+        </div>
+    }
+</p>
+<p>
+    <a asp-action="Create" class="align-content-sm-end">Create New</a>
 </p>
 <div class="datatable-container">
 
