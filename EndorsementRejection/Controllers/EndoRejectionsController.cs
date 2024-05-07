@@ -41,8 +41,10 @@ namespace EndorsementRejection.Controllers
 
         // POST: EndoRejectionsToGenerateLetter
         [HttpPost]
-        public async Task<IActionResult> ToGenerateLetter(string Search, string Clear, string User)
+        public async Task<IActionResult> ToGenerateLetter(string Search, string Clear, string User, string AllRecords)
         {
+            List<EndoRejection> ListPolicy = new List<EndoRejection>();
+
             IUserRepository EndoUserRepo = new UserRepository(_context);
             List<EndoUser> EndoUserList = EndoUserRepo.EndoUserList();
             //List<ApprovalUser> ApprovalUserList = EndoUserRepo.ApprovalUserList();
@@ -70,10 +72,17 @@ namespace EndorsementRejection.Controllers
                         //HttpCookie RT = new HttpCookie("ResultTableName", formcollection["ResultTableName"]);
                         //HttpContext.Response.AppendCookie(new HttpCookie("PolicyNo", PolicyNo));
 
+                        if (AllRecords == "AllRecords")
+                        {
+                            //return View(await _context.EndoRejections.Where(Rejection => Rejection.completedBy == null && Rejection.ApprovedBy != null).ToListAsync());
+                            ListPolicy = await _context.EndoRejections.Where(Rejection => Rejection.RequestedBy == User).OrderByDescending(c => c.Id).ThenBy(n => n.ApprovalStatus).ToListAsync();
 
-                        //List<EndoRejection> ListPolicy = await _context.EndoRejections.Where(EndoRejection => EndoRejection.RequestedBy == User).OrderByDescending(c => c.ApprovedDate).ThenBy(n => n.ApprovalStatus).ToListAsync();
-                        List<EndoRejection> ListPolicy = await _context.EndoRejections.Where(Rejection => Rejection.completedBy == null && Rejection.ApprovedBy != null && Rejection.RequestedBy == User).OrderByDescending(c => c.ApprovedDate).ThenBy(n => n.ApprovalStatus).ToListAsync();
-
+                        }
+                        else
+                        {
+                            //List<EndoRejection> ListPolicy = await _context.EndoRejections.Where(EndoRejection => EndoRejection.RequestedBy == User).OrderByDescending(c => c.ApprovedDate).ThenBy(n => n.ApprovalStatus).ToListAsync();
+                            ListPolicy = await _context.EndoRejections.Where(Rejection => Rejection.completedBy == null && Rejection.ApprovedBy != null && Rejection.RequestedBy == User).OrderByDescending(c => c.ApprovedDate).ThenBy(n => n.ApprovalStatus).ToListAsync();
+                        }
                         if (ListPolicy.Count() == 0)
                         {
 
@@ -118,7 +127,7 @@ namespace EndorsementRejection.Controllers
         // GET: EndoRejections
         public async Task<IActionResult> Index()
         {
-            return View(await _context.EndoRejections.ToListAsync());
+            return View(await _context.EndoRejections.OrderByDescending(Req => Req.Id).ToListAsync());
         }
 
 
