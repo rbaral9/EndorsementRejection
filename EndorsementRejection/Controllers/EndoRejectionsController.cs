@@ -271,6 +271,7 @@ namespace EndorsementRejection.Controllers
                 await _context.SaveChangesAsync();
                 //return RedirectToAction(nameof(Index));
                 TempData["Message"] = "Record saved successfully";
+                ViewBag.EndoUserRecordSave = "Success";
                 return View(endoRejection);
 
             }
