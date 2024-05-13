@@ -236,18 +236,28 @@ namespace EndorsementRejection.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RequestedBy,PolicyNumber,PolicyHolder,ProcessedType,RejectionReason,ApprovalStatus,ApprovedBy,RequestedDate,ApprovedDate,ApprovalComments,completedBy,completedDate,RejectionLetterComments")] EndoRejection endoRejection)
+        public async Task<IActionResult> Create([Bind("Id,RequestedBy,PolicyNumber,PolicyHolder,ProcessedType,EndoProcessed,RejectionReason,ApprovalStatus,ApprovedBy,RequestedDate,ApprovedDate,ApprovalComments,completedBy,completedDate,RejectionLetterComments")] EndoRejection endoRejection)
         {
+            EndoRejection endorejectionViewModel = new EndoRejection();
+            IUserRepository EndoUserRepo = new UserRepository(_context);
+            List<EndoUser> EndoUserList = EndoUserRepo.EndoUserList();
+            List<ApprovalUser> ApprovalUserList = EndoUserRepo.ApprovalUserList();
+            ViewBag.EndoUserList = EndoUserList;
+            ViewBag.ApprovalUserList = ApprovalUserList;
+
             if (endoRejection.RequestedBy == "Select")
             {
                 endoRejection.RequestedBy = null;
                 // ViewBag.RequestedBy = "Requested By field is required";
                 ModelState.AddModelError(nameof(EndoRejection.RequestedBy), "Requested By is required");
             }
-            if (endoRejection.ApprovedBy == "Select")
+            if (endoRejection.ProcessedType == "Partial")
             {
-                endoRejection.ApprovedBy = null;
+                if (endoRejection.EndoProcessed == null || endoRejection.EndoProcessed == "")
+                {
+                    ModelState.AddModelError(nameof(EndoRejection.EndoProcessed), "Endo processed for partial rejection is required");
 
+                }
             }
             if (endoRejection.completedBy == "Select")
             {
@@ -259,14 +269,12 @@ namespace EndorsementRejection.Controllers
             {
                 _context.Add(endoRejection);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                TempData["Message"] = "Record saved successfully";
+                return View(endoRejection);
+
             }
-            EndoRejection endorejectionViewModel = new EndoRejection();
-            IUserRepository EndoUserRepo = new UserRepository(_context);
-            List<EndoUser> EndoUserList = EndoUserRepo.EndoUserList();
-            List<ApprovalUser> ApprovalUserList = EndoUserRepo.ApprovalUserList();
-            ViewBag.EndoUserList = EndoUserList;
-            ViewBag.ApprovalUserList = ApprovalUserList;
+
             return View(endoRejection);
         }
 
@@ -332,19 +340,17 @@ namespace EndorsementRejection.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,RequestedBy,PolicyNumber,PolicyHolder,ProcessedType,RejectionReason,ApprovalStatus,ApprovedBy,RequestedDate,ApprovedDate,ApprovalComments,completedBy,completedDate,RejectionLetterComments")] EndoRejection endoRejection)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,RequestedBy,PolicyNumber,PolicyHolder,ProcessedType,EndoProcessed,RejectionReason,ApprovalStatus,ApprovedBy,RequestedDate,ApprovedDate,ApprovalComments,completedBy,completedDate,RejectionLetterComments")] EndoRejection endoRejection)
         {
-            if (endoRejection.ApprovedBy == "Select")
-            {
-                endoRejection.ApprovedBy = null;
+            IUserRepository EndoUserRepo = new UserRepository(_context);
+            List<EndoUser> EndoUserList = EndoUserRepo.EndoUserList();
+            List<ApprovalUser> ApprovalUserList = EndoUserRepo.ApprovalUserList();
+            ViewBag.EndoUserList = EndoUserList;
+            ViewBag.ApprovalUserList = ApprovalUserList;
 
-            }
-
-            if (endoRejection.completedBy == "Select")
-            {
-                endoRejection.completedBy = null;
-
-            }
+            /* 
+             Approval Validation
+             */
 
             if (endoRejection.ApprovalStatus != null && endoRejection.ApprovedBy == null)
             {
@@ -353,20 +359,36 @@ namespace EndorsementRejection.Controllers
                 ModelState.AddModelError(nameof(EndoRejection.ApprovedBy), "Approved By is required");
             }
 
-            if (endoRejection.ApprovedDate != null && (endoRejection.ApprovedBy == null || endoRejection.ApprovalStatus == null))
+            if (endoRejection.ApprovedBy != null && endoRejection.ApprovalStatus == null)
             {
-                //endoRejection.RequestedBy = null;
-                // ViewBag.RequestedBy = "Requested By field is required";
-                if (endoRejection.ApprovalStatus == null)
-                {
-                    ModelState.AddModelError(nameof(EndoRejection.ApprovalStatus), "Approval Status is required");
-                }
-                if (endoRejection.ApprovedBy == null)
-                {
-                    ModelState.AddModelError(nameof(EndoRejection.ApprovedBy), "Approved By is required");
-                }
-
+                ModelState.AddModelError(nameof(EndoRejection.ApprovalStatus), "Approval Status is required");
             }
+
+            if (endoRejection.ApprovedBy != null || endoRejection.ApprovalStatus != null)
+            {
+                if(endoRejection.ApprovedDate == null)
+                {
+                    ModelState.AddModelError(nameof(EndoRejection.ApprovedDate), "Approved Date is required");
+                }
+                if(endoRejection.ApprovalComments == null || endoRejection.ApprovalComments == "")
+                {
+                    ModelState.AddModelError(nameof(EndoRejection.ApprovalComments), "Approval comments is required");
+                }
+                
+            }
+            ///
+            ///Rejection Letter Processed Validation    
+            /// 
+
+            if(endoRejection.completedBy != null && endoRejection.RejectionLetterComments == null)
+            {
+                ModelState.AddModelError(nameof(EndoRejection.RejectionLetterComments), "Rejection Letter Comments is required");
+            }
+            if(endoRejection.completedBy != null && endoRejection.completedDate == null)
+            {
+                ModelState.AddModelError(nameof(EndoRejection.completedDate), "Rejection Letter Processed Date is required");
+            }
+
 
             if (id != endoRejection.Id)
             {
@@ -391,13 +413,12 @@ namespace EndorsementRejection.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                TempData["Message"] = "Record updated successfully";
+                return View(endoRejection);
+
             }
-            IUserRepository EndoUserRepo = new UserRepository(_context);
-            List<EndoUser> EndoUserList = EndoUserRepo.EndoUserList();
-            List<ApprovalUser> ApprovalUserList = EndoUserRepo.ApprovalUserList();
-            ViewBag.EndoUserList = EndoUserList;
-            ViewBag.ApprovalUserList = ApprovalUserList;
+
 
             return View(endoRejection);
         }
