@@ -6,14 +6,18 @@
 
 @* <h1>Create</h1> *@
 
-<h4 class ="text-center">Endorsement Rejection</h4>
+<h4 class="text-center">Endorsement Rejection</h4>
 
 <div class="container">
     <div class="container">
         <form asp-action="Create">
+
             <div class="card mx-auto" style="width: 36rem;">
-            @* <div class="d-flex aligns-items-center justify-content-center card text-center w-75 mx-auto"> *@
+                @* <div class="d-flex aligns-items-center justify-content-center card text-center w-75 mx-auto"> *@
                 <div class="card-body">
+                    <div class="text-center" style="color:darkolivegreen">
+                        <b>@TempData["Message"]</b>
+                    </div>
                     <h5 class="card-title">Rejection Request:</h5>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
@@ -24,7 +28,7 @@
                             <option value="" selected disabled>---Select Requested By---</option>
                         </select>
                         @* <input asp-for="RequestedBy" class="form-control" />*@
-                        <span asp-validation-for="RequestedBy" class="text-danger"></span> 
+                        <span asp-validation-for="RequestedBy" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="PolicyNumber" class="control-label">Policy Number:</label>
@@ -58,10 +62,15 @@
                                 </label>
 
                             </div>
-                            <span asp-validation-for="ApprovalStatus" class="text-danger"></span>
                         </div>
                         @* <input asp-for="ProcessedType" class="form-control" /> *@
                         <span asp-validation-for="ProcessedType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EndoProcessed" class="control-label">Endo Processed:</label>
+                        <textarea asp-for="EndoProcessed" class="form-control"></textarea>
+                        @* <input asp-for="RejectionReason" class="form-control" /> *@
+                        <span asp-validation-for="EndoProcessed" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="RejectionReason" class="control-label">Rejection Reason:</label>

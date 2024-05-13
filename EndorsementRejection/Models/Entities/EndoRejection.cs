@@ -10,11 +10,17 @@ namespace EndorsementRejection.Models.Entities
 
         [Required(ErrorMessage = "Requested By is Mandatory")]
         public string RequestedBy { get; set; }
-
+        [Required(ErrorMessage = "Policy No is Mandatory")]
         public string PolicyNumber { get; set; }
-        public string? PolicyHolder { get; set; }
-        public string? ProcessedType { get; set; }
-        public string? RejectionReason { get; set; }
+        [Required(ErrorMessage = "Policy Holder is Mandatory")]
+        public string PolicyHolder { get; set; }
+        [Required(ErrorMessage = "Processed Type is Mandatory")]
+        public string ProcessedType { get; set; }
+
+        public string? EndoProcessed { get; set; }
+        [Required(ErrorMessage = "Rejection Reason is Mandatory")]
+        public string RejectionReason { get; set; }
+
         public string? ApprovalStatus { get; set; }
         public string? ApprovedBy { get; set; }
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
