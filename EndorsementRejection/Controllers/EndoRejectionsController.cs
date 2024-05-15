@@ -236,8 +236,14 @@ namespace EndorsementRejection.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RequestedBy,PolicyNumber,PolicyHolder,ProcessedType,EndoProcessed,RejectionReason,ApprovalStatus,ApprovedBy,RequestedDate,ApprovedDate,ApprovalComments,completedBy,completedDate,RejectionLetterComments")] EndoRejection endoRejection)
+        public async Task<IActionResult> Create([Bind("Id,RequestedBy,PolicyNumber,PolicyHolder,ProcessedType,EndoProcessed,RejectionReason,ApprovalStatus,ApprovedBy,RequestedDate,ApprovedDate,ApprovalComments,completedBy,completedDate,RejectionLetterComments,ReferralUrl")] EndoRejection endoRejection)
         {
+            string ReturnUrl = Request.Headers["Referer"].ToString();
+
+            ViewBag.ReturnUrl = "Index";
+            endoRejection.ReferralUrl = "Index";
+
+
             EndoRejection endorejectionViewModel = new EndoRejection();
             IUserRepository EndoUserRepo = new UserRepository(_context);
             List<EndoUser> EndoUserList = EndoUserRepo.EndoUserList();

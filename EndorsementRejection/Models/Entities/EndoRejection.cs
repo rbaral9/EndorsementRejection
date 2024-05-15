@@ -44,7 +44,7 @@ namespace EndorsementRejection.Models.Entities
         }
 
         [NotMapped]
-        public string ReferralUrl { get; set; }
+        public string? ReferralUrl { get; set; }
 
 
 
