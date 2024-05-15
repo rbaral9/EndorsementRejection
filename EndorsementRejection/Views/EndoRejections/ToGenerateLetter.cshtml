@@ -20,14 +20,14 @@
                 <option value="" selected disabled>---Select Requested By---</option>
             </select>
             @* @Html.DropDownList(new SelectList(ViewBag.EndoUserList, "UserName", "UserName")er)
-            <select asp-for="RequestedBy"
-                    class="form-select"
-                    asp-items="@(new SelectList(ViewBag.EndoUserList,"UserName", "UserName"))">
-            </select>
- *@
+        <select asp-for="RequestedBy"
+        class="form-select"
+        asp-items="@(new SelectList(ViewBag.EndoUserList,"UserName", "UserName"))">
+        </select>
+        *@
             <input type="submit" id="Search" value="Search" name="Search" />
             <input type="submit" id="btnClear" value="Clear" name="Clear" />
-            
+
 
         </div>
         <div>
@@ -43,6 +43,11 @@
 
     <thead class="table-dark">
         <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+
             <th class="text-center  text-wrap">
                 @Html.Label("Requested By")
             </th>
@@ -110,6 +115,9 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.RequestedBy)
                 </td>

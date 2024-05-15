@@ -13,6 +13,9 @@
 
     <thead class="table-dark">
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
             <th class="text-center  text-wrap">
                 @Html.Label("Requested By")
             </th>
@@ -80,6 +83,9 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.RequestedBy)
                 </td>
