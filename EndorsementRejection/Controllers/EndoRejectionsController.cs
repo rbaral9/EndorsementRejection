@@ -127,7 +127,7 @@ namespace EndorsementRejection.Controllers
         // GET: EndoRejections
         public async Task<IActionResult> Index()
         {
-            return View(await _context.EndoRejections.OrderByDescending(Req => Req.Id).ToListAsync());
+            return View(await _context.EndoRejections.OrderByDescending(Req => Req.Id).Take(100).ToListAsync());
         }
 
 
