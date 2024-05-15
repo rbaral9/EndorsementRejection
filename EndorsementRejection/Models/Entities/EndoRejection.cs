@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EndorsementRejection.Models.Entities
 {
@@ -42,8 +43,8 @@ namespace EndorsementRejection.Models.Entities
             //ApprovedDate = DateTime.Now;
         }
 
-
-
+        [NotMapped]
+        public string ReferralUrl { get; set; }
 
 
 

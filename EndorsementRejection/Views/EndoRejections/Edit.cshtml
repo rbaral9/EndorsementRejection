@@ -22,7 +22,7 @@
                     <h5 class="card-title">Rejection Request:</h5>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
-                        <label asp-for="RequestedBy" class="control-label"></label>
+                        <label asp-for="RequestedBy" class="control-label">Requested By:</label>
                         <select asp-for="RequestedBy"
                                 class="form-select"
                                 asp-items="@(new SelectList(ViewBag.EndoUserList,"UserName", "UserName"))">
@@ -141,7 +141,7 @@
                     <h5 class="card-title">Rejection Letter Processed:</h5>
 
                     <div class="form-group">
-                        <label asp-for="completedBy" class="control-label">completed By:</label>
+                        <label asp-for="completedBy" class="control-label">Completed By:</label>
                         <select asp-for="completedBy"
                                 class="form-select"
                                 asp-items="@(new SelectList(ViewBag.EndoUserList,"UserName", "UserName"))">
@@ -152,7 +152,7 @@
                         <span asp-validation-for="completedBy" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="completedDate" class="control-label">completed Date:</label>
+                        <label asp-for="completedDate" class="control-label">Completed Date:</label>
                         @Html.TextBoxFor(Model => Model.completedDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
 
                         @* <input asp-for="completedDate" class="form-control" /> *@
@@ -165,12 +165,30 @@
                         @* <input asp-for="ApprovalComments" class="form-control" /> *@
                         <span asp-validation-for="RejectionLetterComments" class="text-danger"></span>
                     </div>
+                    <div>
+                        <input type="hidden" asp-for="ReferralUrl" />
+
+                    </div>
                     <br />
                     <div class="form-group">
                         <input type="submit" value="Save" class="btn btn-primary" />
                     </div>
                     <div>
-                        <a asp-action="Index">Back to List</a>
+                        @if(Model.ReferralUrl == "ToGenerateLetter")
+                        {
+                            <a asp-action="ToGenerateLetter" asp-controller="EndoRejections">Back to List</a>
+                        }
+                        else if (Model.ReferralUrl == "ToBeApproved")
+                        {
+                            <a asp-action="ToBeApproved" asp-controller="EndoRejections">Back to List</a>
+                        }
+                        else
+{
+                            <a asp-action="Index" asp-controller="EndoRejections">Back to List</a>
+                        }
+
+
+                        @* <a asp-action="Index">Back to List</a> *@
                     </div>
                 </div>
             </div>

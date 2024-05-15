@@ -304,8 +304,10 @@ namespace EndorsementRejection.Controllers
 
 
         // GET: EndoRejections/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, string ReferralUrl )
         {
+            string ReturnUrl = Request.Headers["Referer"].ToString();
+
             if (id == null)
             {
                 return NotFound();
@@ -324,12 +326,28 @@ namespace EndorsementRejection.Controllers
             {
                 endoRejection.completedDate = DateTime.Now;
             }
-
+            endoRejection.ReferralUrl = ReferralUrl;
             IUserRepository EndoUserRepo = new UserRepository(_context);
             List<EndoUser> EndoUserList = EndoUserRepo.EndoUserList();
             List<ApprovalUser> ApprovalUserList = EndoUserRepo.ApprovalUserList();
             ViewBag.EndoUserList = EndoUserList;
             ViewBag.ApprovalUserList = ApprovalUserList;
+            if (ReturnUrl.Contains("ToBeApproved"))
+            {
+                ViewBag.ReturnUrl = "ToBeApproved";
+                endoRejection.ReferralUrl = "ToBeApproved";
+            }
+            else if(ReturnUrl.Contains("ToGenerateLetter"))
+            {
+                ViewBag.ReturnUrl = "ToGenerateLetter";
+                endoRejection.ReferralUrl = "ToGenerateLetter";
+            }
+            else /*if(ReturnUrl.Contains("Index"))*/
+            {
+                ViewBag.ReturnUrl = "Index";
+                endoRejection.ReferralUrl = "Index";
+            }
+           
 
             return View(endoRejection);
         }
@@ -341,7 +359,7 @@ namespace EndorsementRejection.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,RequestedBy,PolicyNumber,PolicyHolder,ProcessedType,EndoProcessed,RejectionReason,ApprovalStatus,ApprovedBy,RequestedDate,ApprovedDate,ApprovalComments,completedBy,completedDate,RejectionLetterComments")] EndoRejection endoRejection)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,RequestedBy,PolicyNumber,PolicyHolder,ProcessedType,EndoProcessed,RejectionReason,ApprovalStatus,ApprovedBy,RequestedDate,ApprovedDate,ApprovalComments,completedBy,completedDate,RejectionLetterComments,ReferralUrl")] EndoRejection endoRejection)
         {
             IUserRepository EndoUserRepo = new UserRepository(_context);
             List<EndoUser> EndoUserList = EndoUserRepo.EndoUserList();
