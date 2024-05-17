@@ -373,9 +373,25 @@ namespace EndorsementRejection.Controllers
             ViewBag.EndoUserList = EndoUserList;
             ViewBag.ApprovalUserList = ApprovalUserList;
 
+
+
+
+            if (endoRejection.ApprovalStatus == null)
+            {
+                 endoRejection.ApprovedDate = null;
+            }
+            if (endoRejection.completedBy == null)
+            {
+                endoRejection.completedDate = null;
+            }
+
             /* 
              Approval Validation
              */
+
+
+
+
 
             if (endoRejection.ApprovalStatus != null && endoRejection.ApprovedBy == null)
             {
