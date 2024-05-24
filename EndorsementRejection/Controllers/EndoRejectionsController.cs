@@ -310,7 +310,7 @@ namespace EndorsementRejection.Controllers
 
 
         // GET: EndoRejections/Edit/5
-        public async Task<IActionResult> Edit(int? id, string ReferralUrl )
+        public async Task<IActionResult> Edit(int? id, string ReferralUrl)
         {
             string ReturnUrl = Request.Headers["Referer"].ToString();
 
@@ -343,7 +343,7 @@ namespace EndorsementRejection.Controllers
                 ViewBag.ReturnUrl = "ToBeApproved";
                 endoRejection.ReferralUrl = "ToBeApproved";
             }
-            else if(ReturnUrl.Contains("ToGenerateLetter"))
+            else if (ReturnUrl.Contains("ToGenerateLetter"))
             {
                 ViewBag.ReturnUrl = "ToGenerateLetter";
                 endoRejection.ReferralUrl = "ToGenerateLetter";
@@ -353,7 +353,7 @@ namespace EndorsementRejection.Controllers
                 ViewBag.ReturnUrl = "Index";
                 endoRejection.ReferralUrl = "Index";
             }
-           
+
 
             return View(endoRejection);
         }
@@ -378,7 +378,7 @@ namespace EndorsementRejection.Controllers
 
             if (endoRejection.ApprovalStatus == null)
             {
-                 endoRejection.ApprovedDate = null;
+                endoRejection.ApprovedDate = null;
             }
             if (endoRejection.completedBy == null)
             {
@@ -407,27 +407,33 @@ namespace EndorsementRejection.Controllers
 
             if (endoRejection.ApprovedBy != null || endoRejection.ApprovalStatus != null)
             {
-                if(endoRejection.ApprovedDate == null)
+                if (endoRejection.ApprovedDate == null)
                 {
                     ModelState.AddModelError(nameof(EndoRejection.ApprovedDate), "Approved Date is required");
                 }
-                if(endoRejection.ApprovalComments == null || endoRejection.ApprovalComments == "")
+                if (endoRejection.ApprovalComments == null || endoRejection.ApprovalComments == "")
                 {
                     ModelState.AddModelError(nameof(EndoRejection.ApprovalComments), "Approval comments is required");
                 }
-                
+
             }
             ///
             ///Rejection Letter Processed Validation    
             /// 
 
-            if(endoRejection.completedBy != null && endoRejection.RejectionLetterComments == null)
+            if (endoRejection.completedBy != null && endoRejection.RejectionLetterComments == null)
             {
                 ModelState.AddModelError(nameof(EndoRejection.RejectionLetterComments), "Rejection Letter Comments is required");
             }
-            if(endoRejection.completedBy != null && endoRejection.completedDate == null)
+            if (endoRejection.completedBy != null && endoRejection.completedDate == null)
             {
                 ModelState.AddModelError(nameof(EndoRejection.completedDate), "Rejection Letter Processed Date is required");
+            }
+
+            if (endoRejection.completedBy == null && endoRejection.RejectionLetterComments != null)
+            {
+
+                ModelState.AddModelError(nameof(EndoRejection.RejectionLetterComments), "Rejection Completed By is required");
             }
 
 
