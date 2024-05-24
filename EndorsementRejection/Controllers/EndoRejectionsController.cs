@@ -433,7 +433,7 @@ namespace EndorsementRejection.Controllers
             if (endoRejection.completedBy == null && endoRejection.RejectionLetterComments != null)
             {
 
-                ModelState.AddModelError(nameof(EndoRejection.RejectionLetterComments), "Rejection Completed By is required");
+                ModelState.AddModelError(nameof(EndoRejection.completedBy), "Rejection Completed By is required");
             }
 
 
