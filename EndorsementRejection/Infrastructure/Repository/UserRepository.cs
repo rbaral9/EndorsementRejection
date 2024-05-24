@@ -23,7 +23,7 @@ namespace EndorsementRejection.Infrastructure.Repository
             var list = new List<EndoUser>();
             list = _context.EndoUsers.ToList();
             //list.Add(new EndoUser { Id = 0, UserName = "Select", Password = "", Role = "" });
-            list = list.OrderBy(user => user.Id).ToList();
+            list = list.OrderBy(user => user.UserName).ToList();
             return list;
         }
         public List<ApprovalUser> ApprovalUserList()
@@ -31,7 +31,7 @@ namespace EndorsementRejection.Infrastructure.Repository
             var list = new List<ApprovalUser>();
             list = _context.ApprovalUsers.ToList();
            // list.Add(new ApprovalUser { Id = 0, UserName = "Select", Password = "", Role = "" });
-            list = list.OrderBy(user => user.Id).ToList();
+            list = list.OrderBy(user => user.UserName).ToList();
             return list;
         }
 
